@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Cassandra" id="Project-20c2" database="Cassandra" >
+	<schema name="Projeto02" options="WITH REPLICATION = {&#039;class&#039;:&#039;SimpleStrategy&#039;,&#039;replication_factor&#039;:1 }" >
+		<table name="TB_CONSULTA1" >
+			<column name="ID" type="uuid" jt="102" mandatory="y" />
+			<column name="FONTE" type="text" jt="12" />
+			<column name="TOTAL_VENDAS" type="double" jt="8" />
+			<index name="Pk_TB_CONSULTA1_ID" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+		</table>
+		<table name="TB_CONSULTA2" >
+			<column name="ID" type="uuid" jt="102" mandatory="y" />
+			<column name="ESTADO" type="text" jt="12" />
+			<column name="TOTAL_VENDAS" type="double" jt="8" />
+			<index name="Pk_TB_CONSULTA2_ID" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+		</table>
+		<table name="TB_CONSULTA3" >
+			<column name="ID" type="uuid" jt="102" mandatory="y" />
+			<column name="ESTADO" type="text" jt="12" />
+			<column name="DATA_PEDIDO" type="date" jt="91" />
+			<column name="MEDIA_DESCONTO" type="double" jt="8" />
+			<index name="Pk_TB_CONSULTA3_ID" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+		</table>
+	</schema>
+	<schema name="system" >
+		<table name="IndexInfo" >
+			<comment><![CDATA[ID: [9f5c6374-d485-3229-9a0a-5094af9ad1e3] 
+DDL: 
+CREATE TABLE system."IndexInfo" (
+    table_name text,
+    index_name text,
+    value blob,
+    PRIMARY KEY (table_name, index_name)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'built column indexes'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="table_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="index_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="value" type="blob" length="0" decimal="0" jt="2004" />
+			<index name="pk_IndexInfo" unique="PRIMARY_KEY" >
+				<column name="table_name" />
+				<column name="index_name" />
+			</index>
+		</table>
+		<table name="available_ranges" >
+			<comment><![CDATA[ID: [c539fcab-d65a-31d1-8133-d25605643ee3] 
+DDL: 
+CREATE TABLE system.available_ranges (
+    keyspace_name text,
+    ranges set<blob>,
+    PRIMARY KEY (keyspace_name)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'available keyspace/ranges during bootstrap/replace that are ready to be served'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="ranges" type="set&lt;blob&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_available_ranges" unique="PRIMARY_KEY" >
+				<column name="keyspace_name" />
+			</index>
+		</table>
+		<table name="available_ranges_v2" >
+			<comment><![CDATA[ID: [4224a088-2ac9-3d0c-889d-fbb5f0facda0] 
+DDL: 
+CREATE TABLE system.available_ranges_v2 (
+    keyspace_name text,
+    full_ranges set<blob>,
+    transient_ranges set<blob>,
+    PRIMARY KEY (keyspace_name)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'available keyspace/ranges during bootstrap/replace that are ready to be served'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="full_ranges" type="set&lt;blob&gt;" length="0" decimal="0" jt="12" />
+			<column name="transient_ranges" type="set&lt;blob&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_available_ranges_v2" unique="PRIMARY_KEY" >
+				<column name="keyspace_name" />
+			</index>
+		</table>
+		<table name="batches" >
+			<comment><![CDATA[ID: [919a4bc5-7a33-3573-b03e-13fc3f68b465] 
+DDL: 
+CREATE TABLE system.batches (
+    id timeuuid,
+    mutations list<blob>,
+    version int,
+    PRIMARY KEY (id)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'batches awaiting replay'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 2 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="id" type="timeuuid" length="0" decimal="0" jt="1" mandatory="y" />
+			<column name="mutations" type="list&lt;blob&gt;" length="0" decimal="0" jt="12" />
+			<column name="version" type="int" length="0" decimal="0" jt="4" />
+			<index name="pk_batches" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="built_views" >
+			<comment><![CDATA[ID: [4b3c50a9-ea87-3d76-9101-6dbc9c38494a] 
+DDL: 
+CREATE TABLE system.built_views (
+    keyspace_name text,
+    view_name text,
+    status_replicated boolean,
+    PRIMARY KEY (keyspace_name, view_name)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'built views'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="view_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="status_replicated" type="boolean" length="0" decimal="0" jt="16" />
+			<index name="pk_built_views" unique="PRIMARY_KEY" >
+				<column name="keyspace_name" />
+				<column name="view_name" />
+			</index>
+		</table>
+		<table name="compaction_history" >
+			<comment><![CDATA[ID: [b4dbb7b4-dc49-3fb5-b3bf-ce6e434832ca] 
+DDL: 
+CREATE TABLE system.compaction_history (
+    id uuid,
+    bytes_in bigint,
+    bytes_out bigint,
+    columnfamily_name text,
+    compacted_at timestamp,
+    keyspace_name text,
+    rows_merged map<int, bigint>,
+    PRIMARY KEY (id)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'week-long compaction history'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 604800
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="id" type="uuid" length="0" decimal="0" jt="102" mandatory="y" />
+			<column name="bytes_in" type="bigint" length="0" decimal="0" jt="-5" />
+			<column name="bytes_out" type="bigint" length="0" decimal="0" jt="-5" />
+			<column name="columnfamily_name" type="text" length="0" decimal="0" jt="12" />
+			<column name="compacted_at" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" />
+			<column name="rows_merged" type="map&lt;int, bigint&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_compaction_history" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="local" >
+			<comment><![CDATA[ID: [7ad54392-bcdd-35a6-8417-4e047860b377] 
+DDL: 
+CREATE TABLE system.local (
+    key text,
+    bootstrapped text,
+    broadcast_address inet,
+    broadcast_port int,
+    cluster_name text,
+    cql_version text,
+    data_center text,
+    gossip_generation int,
+    host_id uuid,
+    listen_address inet,
+    listen_port int,
+    native_protocol_version text,
+    partitioner text,
+    rack text,
+    release_version text,
+    rpc_address inet,
+    rpc_port int,
+    schema_version uuid,
+    tokens set<text>,
+    truncated_at map<uuid, blob>,
+    PRIMARY KEY (key)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'information about the local node'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="key" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="bootstrapped" type="text" length="0" decimal="0" jt="12" />
+			<column name="broadcast_address" type="inet" length="0" decimal="0" jt="70" />
+			<column name="broadcast_port" type="int" length="0" decimal="0" jt="4" />
+			<column name="cluster_name" type="text" length="0" decimal="0" jt="12" />
+			<column name="cql_version" type="text" length="0" decimal="0" jt="12" />
+			<column name="data_center" type="text" length="0" decimal="0" jt="12" />
+			<column name="gossip_generation" type="int" length="0" decimal="0" jt="4" />
+			<column name="host_id" type="uuid" length="0" decimal="0" jt="102" />
+			<column name="listen_address" type="inet" length="0" decimal="0" jt="70" />
+			<column name="listen_port" type="int" length="0" decimal="0" jt="4" />
+			<column name="native_protocol_version" type="text" length="0" decimal="0" jt="12" />
+			<column name="partitioner" type="text" length="0" decimal="0" jt="12" />
+			<column name="rack" type="text" length="0" decimal="0" jt="12" />
+			<column name="release_version" type="text" length="0" decimal="0" jt="12" />
+			<column name="rpc_address" type="inet" length="0" decimal="0" jt="70" />
+			<column name="rpc_port" type="int" length="0" decimal="0" jt="4" />
+			<column name="schema_version" type="uuid" length="0" decimal="0" jt="102" />
+			<column name="tokens" type="set&lt;text&gt;" length="0" decimal="0" jt="12" />
+			<column name="truncated_at" type="map&lt;uuid, blob&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_local" unique="PRIMARY_KEY" >
+				<column name="key" />
+			</index>
+		</table>
+		<table name="paxos" >
+			<comment><![CDATA[ID: [b7b7f0c2-fd0a-3410-8c05-3ef614bb7c2d] 
+DDL: 
+CREATE TABLE system.paxos (
+    row_key blob,
+    cf_id uuid,
+    in_progress_ballot timeuuid,
+    most_recent_commit blob,
+    most_recent_commit_at timeuuid,
+    most_recent_commit_version int,
+    proposal blob,
+    proposal_ballot timeuuid,
+    proposal_version int,
+    PRIMARY KEY (row_key, cf_id)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'in-progress paxos proposals'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.LeveledCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="row_key" type="blob" length="0" decimal="0" jt="2004" mandatory="y" />
+			<column name="cf_id" type="uuid" length="0" decimal="0" jt="102" mandatory="y" />
+			<column name="in_progress_ballot" type="timeuuid" length="0" decimal="0" jt="1" />
+			<column name="most_recent_commit" type="blob" length="0" decimal="0" jt="2004" />
+			<column name="most_recent_commit_at" type="timeuuid" length="0" decimal="0" jt="1" />
+			<column name="most_recent_commit_version" type="int" length="0" decimal="0" jt="4" />
+			<column name="proposal" type="blob" length="0" decimal="0" jt="2004" />
+			<column name="proposal_ballot" type="timeuuid" length="0" decimal="0" jt="1" />
+			<column name="proposal_version" type="int" length="0" decimal="0" jt="4" />
+			<index name="pk_paxos" unique="PRIMARY_KEY" >
+				<column name="row_key" />
+				<column name="cf_id" />
+			</index>
+		</table>
+		<table name="peer_events" >
+			<comment><![CDATA[ID: [59dfeaea-8db2-3341-91ef-109974d81484] 
+DDL: 
+CREATE TABLE system.peer_events (
+    peer inet,
+    hints_dropped map<uuid, int>,
+    PRIMARY KEY (peer)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'events related to peers'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="peer" type="inet" length="0" decimal="0" jt="70" mandatory="y" />
+			<column name="hints_dropped" type="map&lt;uuid, int&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_peer_events" unique="PRIMARY_KEY" >
+				<column name="peer" />
+			</index>
+		</table>
+		<table name="peer_events_v2" >
+			<comment><![CDATA[ID: [0e65065f-e401-38ed-9507-b9213fae8d11] 
+DDL: 
+CREATE TABLE system.peer_events_v2 (
+    peer inet,
+    peer_port int,
+    hints_dropped map<uuid, int>,
+    PRIMARY KEY (peer, peer_port)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'events related to peers'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="peer" type="inet" length="0" decimal="0" jt="70" mandatory="y" />
+			<column name="peer_port" type="int" length="0" decimal="0" jt="4" mandatory="y" />
+			<column name="hints_dropped" type="map&lt;uuid, int&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_peer_events_v2" unique="PRIMARY_KEY" >
+				<column name="peer" />
+				<column name="peer_port" />
+			</index>
+		</table>
+		<table name="peers" >
+			<comment><![CDATA[ID: [37f71aca-7dc2-383b-a706-72528af04d4f] 
+DDL: 
+CREATE TABLE system.peers (
+    peer inet,
+    data_center text,
+    host_id uuid,
+    preferred_ip inet,
+    rack text,
+    release_version text,
+    rpc_address inet,
+    schema_version uuid,
+    tokens set<text>,
+    PRIMARY KEY (peer)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'information about known peers in the cluster'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="peer" type="inet" length="0" decimal="0" jt="70" mandatory="y" />
+			<column name="data_center" type="text" length="0" decimal="0" jt="12" />
+			<column name="host_id" type="uuid" length="0" decimal="0" jt="102" />
+			<column name="preferred_ip" type="inet" length="0" decimal="0" jt="70" />
+			<column name="rack" type="text" length="0" decimal="0" jt="12" />
+			<column name="release_version" type="text" length="0" decimal="0" jt="12" />
+			<column name="rpc_address" type="inet" length="0" decimal="0" jt="70" />
+			<column name="schema_version" type="uuid" length="0" decimal="0" jt="102" />
+			<column name="tokens" type="set&lt;text&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_peers" unique="PRIMARY_KEY" >
+				<column name="peer" />
+			</index>
+		</table>
+		<table name="peers_v2" >
+			<comment><![CDATA[ID: [c4325fbb-8e5e-3baf-bd07-0f9250ed818e] 
+DDL: 
+CREATE TABLE system.peers_v2 (
+    peer inet,
+    peer_port int,
+    data_center text,
+    host_id uuid,
+    native_address inet,
+    native_port int,
+    preferred_ip inet,
+    preferred_port int,
+    rack text,
+    release_version text,
+    schema_version uuid,
+    tokens set<text>,
+    PRIMARY KEY (peer, peer_port)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'information about known peers in the cluster'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="peer" type="inet" length="0" decimal="0" jt="70" mandatory="y" />
+			<column name="peer_port" type="int" length="0" decimal="0" jt="4" mandatory="y" />
+			<column name="data_center" type="text" length="0" decimal="0" jt="12" />
+			<column name="host_id" type="uuid" length="0" decimal="0" jt="102" />
+			<column name="native_address" type="inet" length="0" decimal="0" jt="70" />
+			<column name="native_port" type="int" length="0" decimal="0" jt="4" />
+			<column name="preferred_ip" type="inet" length="0" decimal="0" jt="70" />
+			<column name="preferred_port" type="int" length="0" decimal="0" jt="4" />
+			<column name="rack" type="text" length="0" decimal="0" jt="12" />
+			<column name="release_version" type="text" length="0" decimal="0" jt="12" />
+			<column name="schema_version" type="uuid" length="0" decimal="0" jt="102" />
+			<column name="tokens" type="set&lt;text&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_peers_v2" unique="PRIMARY_KEY" >
+				<column name="peer" />
+				<column name="peer_port" />
+			</index>
+		</table>
+		<table name="prepared_statements" >
+			<comment><![CDATA[ID: [18a9c257-6a0c-3841-ba71-8cd529849fef] 
+DDL: 
+CREATE TABLE system.prepared_statements (
+    prepared_id blob,
+    logged_keyspace text,
+    query_string text,
+    PRIMARY KEY (prepared_id)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'prepared statements'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="prepared_id" type="blob" length="0" decimal="0" jt="2004" mandatory="y" />
+			<column name="logged_keyspace" type="text" length="0" decimal="0" jt="12" />
+			<column name="query_string" type="text" length="0" decimal="0" jt="12" />
+			<index name="pk_prepared_statements" unique="PRIMARY_KEY" >
+				<column name="prepared_id" />
+			</index>
+		</table>
+		<table name="repairs" >
+			<comment><![CDATA[ID: [a3d277d1-cfaf-36f5-a2a7-38d5eea9ad6a] 
+DDL: 
+CREATE TABLE system.repairs (
+    parent_id timeuuid,
+    cfids set<uuid>,
+    coordinator inet,
+    coordinator_port int,
+    last_update timestamp,
+    participants set<inet>,
+    participants_wp set<text>,
+    ranges set<blob>,
+    repaired_at timestamp,
+    started_at timestamp,
+    state int,
+    PRIMARY KEY (parent_id)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'repairs'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="parent_id" type="timeuuid" length="0" decimal="0" jt="1" mandatory="y" />
+			<column name="cfids" type="set&lt;uuid&gt;" length="0" decimal="0" jt="12" />
+			<column name="coordinator" type="inet" length="0" decimal="0" jt="70" />
+			<column name="coordinator_port" type="int" length="0" decimal="0" jt="4" />
+			<column name="last_update" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="participants" type="set&lt;inet&gt;" length="0" decimal="0" jt="12" />
+			<column name="participants_wp" type="set&lt;text&gt;" length="0" decimal="0" jt="12" />
+			<column name="ranges" type="set&lt;blob&gt;" length="0" decimal="0" jt="12" />
+			<column name="repaired_at" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="started_at" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="state" type="int" length="0" decimal="0" jt="4" />
+			<index name="pk_repairs" unique="PRIMARY_KEY" >
+				<column name="parent_id" />
+			</index>
+		</table>
+		<table name="size_estimates" >
+			<comment><![CDATA[ID: [618f817b-005f-3678-b8a4-53f3930b8e86] 
+DDL: 
+CREATE TABLE system.size_estimates (
+    keyspace_name text,
+    table_name text,
+    range_start text,
+    range_end text,
+    mean_partition_size bigint,
+    partitions_count bigint,
+    PRIMARY KEY (keyspace_name, table_name, range_start, range_end)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'per-table primary range size estimates, table is deprecated in favor of table_estimates'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="table_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="range_start" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="range_end" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="mean_partition_size" type="bigint" length="0" decimal="0" jt="-5" />
+			<column name="partitions_count" type="bigint" length="0" decimal="0" jt="-5" />
+			<index name="pk_size_estimates" unique="PRIMARY_KEY" >
+				<column name="keyspace_name" />
+				<column name="table_name" />
+				<column name="range_start" />
+				<column name="range_end" />
+			</index>
+		</table>
+		<table name="sstable_activity" >
+			<comment><![CDATA[ID: [5a1ff267-ace0-3f12-8563-cfae6103c65e] 
+DDL: 
+CREATE TABLE system.sstable_activity (
+    keyspace_name text,
+    columnfamily_name text,
+    generation int,
+    rate_120m double,
+    rate_15m double,
+    PRIMARY KEY ((keyspace_name, columnfamily_name, generation))
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'historic sstable read rates'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="columnfamily_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="generation" type="int" length="0" decimal="0" jt="4" mandatory="y" />
+			<column name="rate_120m" type="double" length="0" decimal="0" jt="8" />
+			<column name="rate_15m" type="double" length="0" decimal="0" jt="8" />
+			<index name="pk_sstable_activity" unique="PRIMARY_KEY" >
+				<column name="keyspace_name" />
+				<column name="columnfamily_name" />
+				<column name="generation" />
+			</index>
+		</table>
+		<table name="table_estimates" >
+			<comment><![CDATA[ID: [176c39cd-b93d-33a5-a218-8eb06a56f66e] 
+DDL: 
+CREATE TABLE system.table_estimates (
+    keyspace_name text,
+    table_name text,
+    range_type text,
+    range_start text,
+    range_end text,
+    mean_partition_size bigint,
+    partitions_count bigint,
+    PRIMARY KEY (keyspace_name, table_name, range_type, range_start, range_end)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'per-table range size estimates'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="table_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="range_type" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="range_start" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="range_end" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="mean_partition_size" type="bigint" length="0" decimal="0" jt="-5" />
+			<column name="partitions_count" type="bigint" length="0" decimal="0" jt="-5" />
+			<index name="pk_table_estimates" unique="PRIMARY_KEY" >
+				<column name="keyspace_name" />
+				<column name="table_name" />
+				<column name="range_type" />
+				<column name="range_start" />
+				<column name="range_end" />
+			</index>
+		</table>
+		<table name="transferred_ranges" >
+			<comment><![CDATA[ID: [6cad20f7-d4f5-3af2-b6e2-0da33c6c1f83] 
+DDL: 
+CREATE TABLE system.transferred_ranges (
+    operation text,
+    keyspace_name text,
+    peer inet,
+    ranges set<blob>,
+    PRIMARY KEY ((operation, keyspace_name), peer)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'record of transferred ranges for streaming operation'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="operation" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="peer" type="inet" length="0" decimal="0" jt="70" mandatory="y" />
+			<column name="ranges" type="set&lt;blob&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_transferred_ranges" unique="PRIMARY_KEY" >
+				<column name="operation" />
+				<column name="keyspace_name" />
+				<column name="peer" />
+			</index>
+		</table>
+		<table name="transferred_ranges_v2" >
+			<comment><![CDATA[ID: [1ff78f1a-7df1-3a2a-a998-6f4932270af5] 
+DDL: 
+CREATE TABLE system.transferred_ranges_v2 (
+    operation text,
+    keyspace_name text,
+    peer inet,
+    peer_port int,
+    ranges set<blob>,
+    PRIMARY KEY ((operation, keyspace_name), peer, peer_port)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'record of transferred ranges for streaming operation'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="operation" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="peer" type="inet" length="0" decimal="0" jt="70" mandatory="y" />
+			<column name="peer_port" type="int" length="0" decimal="0" jt="4" mandatory="y" />
+			<column name="ranges" type="set&lt;blob&gt;" length="0" decimal="0" jt="12" />
+			<index name="pk_transferred_ranges_v2" unique="PRIMARY_KEY" >
+				<column name="operation" />
+				<column name="keyspace_name" />
+				<column name="peer" />
+				<column name="peer_port" />
+			</index>
+		</table>
+		<table name="view_builds_in_progress" >
+			<comment><![CDATA[ID: [6c22df66-c3bd-3df6-b74d-21179c6a9fe9] 
+DDL: 
+CREATE TABLE system.view_builds_in_progress (
+    keyspace_name text,
+    view_name text,
+    start_token text,
+    end_token text,
+    keys_built bigint,
+    last_token text,
+    PRIMARY KEY (keyspace_name, view_name, start_token, end_token)
+) WITH read_repair_chance = 0.0
+   AND dclocal_read_repair_chance = 0.0
+   AND gc_grace_seconds = 0
+   AND bloom_filter_fp_chance = 0.01
+   AND caching = { 'keys' : 'ALL', 'rows_per_partition' : 'NONE' }
+   AND comment = 'views builds current progress'
+   AND compaction = { 'class' : 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold' : 32, 'min_threshold' : 4 }
+   AND compression = { 'chunk_length_in_kb' : 16, 'class' : 'org.apache.cassandra.io.compress.LZ4Compressor' }
+   AND default_time_to_live = 0
+   AND speculative_retry = '99p'
+   AND min_index_interval = 128
+   AND max_index_interval = 2048
+   AND crc_check_chance = 1.0
+   AND cdc = false;]]></comment>
+			<column name="keyspace_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="view_name" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="start_token" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="end_token" type="text" length="0" decimal="0" jt="12" mandatory="y" />
+			<column name="keys_built" type="bigint" length="0" decimal="0" jt="-5" />
+			<column name="last_token" type="text" length="0" decimal="0" jt="12" />
+			<index name="pk_view_builds_in_progress" unique="PRIMARY_KEY" >
+				<column name="keyspace_name" />
+				<column name="view_name" />
+				<column name="start_token" />
+				<column name="end_token" />
+			</index>
+		</table>
+	</schema>
+	<connector name="Cassandra" database="Cassandra" driver_class="com.github.cassandra.jdbc.CassandraDriver" driver_jar="cassandra-jdbc-driver-0.6.4-shaded.jar" driver_desc="No Authentication" host="localhost" port="9042" instance="system" user="cassandra" passwd="Y2Fzc2FuZHJh" />
+	<layout name="Layout" id="Layout-175f" show_relation="columns" >
+		<entity schema="Projeto02" name="TB_CONSULTA1" color="3986C1" x="48" y="48" />
+		<entity schema="Projeto02" name="TB_CONSULTA2" color="C1D8EE" x="320" y="48" />
+		<entity schema="Projeto02" name="TB_CONSULTA3" color="C1D8EE" x="560" y="48" />
+	</layout>
+</project>
